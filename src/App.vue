@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-const contador = ref(0)
-const produtos = [
+const produtos = ref([
     {
         id: 1,
         nome: 'Camiseta',
@@ -52,7 +51,7 @@ const produtos = [
         nome: 'Meia',
         preco: 9.90
     }
-]
+])
 const carrinho = [
     {
         id: 1,
@@ -81,26 +80,38 @@ function total() {
         const element = valorTotal[i];
     }
 }
+function diminuir(){
+    if(produtos.quantidade.value > 0){
+        produtos.quantidade.value--
+    }
+}
 function adicionar() {
     carrinho.value.push(produtos.value)
     carrinho.value = ''
 }
-function remover(key) {
+function remover() {
     carrinho.value.splice(index, 1)
 }
+
 </script>
 <template>
     <ul>
         <h2>Produtos</h2>
-        <li v-for="produto in produtos" :key="produto.id">
-            <p>Nome: {{ produto.name }}</p>
-            <p>Detalhes</p>
+        <li v-for="(produto, index) in produtos" :key="index">
+            <p>Nome: {{ produto.nome }}</p>
+            <p>Preço: R$:{{ produto.preco }}</p>
+            <p>Quantidade: {{ produto.quantidade }}</p>
             <p v-for="(produto, key) in produtos" :key="key">{{ produto.key }}</p>
-            <button @click="adicionar">+</button>
+            <button @click="produto.quantidade++">+</button>
             <button @click="remover">-</button>
-            <p>{{ contador }}</p>
+            <button @click="diminuir">-</button>
         </li>
     </ul>
 
-   
+    <div class="container">
+        <h2>Carrinho</h2>
+        <button @click="total" class="botao">Somar produtos</button>
+        <p>{{ valorTotal }}</p>
+            <button type="submit" class="botao">finalizar compra</button>
+    </div>
 </template>
