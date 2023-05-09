@@ -9,197 +9,251 @@ const novoItem = ref({
 })
 
 const produtos = ref([
-    {
-        id: 1,
-        nome: 'Camiseta',
-        preco: 49.90,
-        quantidade: 0
-    },
-    {
-        id: 2,
-        nome: 'Calça',
-        preco: 99.90,
-        quantidade: 0
-    },
-    {
-        id: 3,
-        nome: 'Meia',
-        preco: 9.90,
-        quantidade: 0
-    },
-    {
-        id: 4,
-        nome: 'Sapato',
-        preco: 199.90,
-        quantidade: 0
-    },
-    {
-        id: 5,
-        nome: 'Boné',
-        preco: 29.90,
-        quantidade: 0
-    },
-    {
-        id: 6,
-        nome: 'Óculos',
-        preco: 99.90,
-        quantidade: 0
-    },
-    {
-        id: 7,
-        nome: 'Relógio',
-        preco: 299.90,
-        quantidade: 0
-    },
-    {
-        id: 8,
-        nome: 'Bermuda',
-        preco: 79.90,
-        quantidade: 0
-    },
-    {
-        id: 9,
-        nome: 'Meia',
-        preco: 9.90,
-        quantidade: 0
-    }
-])
-const carrinho = ref([
-    {
-        nome: 'Camiseta',
-        preco: 49.90,
-        quantidade: 1,
-        valorTotal: 49.90
-    },
-    {
-        nome: 'Calça',
-        preco: 99.90,
-        quantidade: 2,
-        valorTotal: 199.80
-    },
-    {
-        nome: 'Meia',
-        preco: 9.90,
-        quantidade: 4,
-        valorTotal: 39.60
-    }
+  {
+    id: 1,
+    nome: 'Camiseta',
+    preco: 49.9,
+    quantidade: 0,
+    imagem: "imagens/camiseta.png"
+  },
+  {
+    id: 2,
+    nome: 'Calça',
+    preco: 99.9,
+    quantidade: 0,
+    imagem: "imagens/camiseta.png"
+  },
+  {
+    id: 3,
+    nome: 'Meia',
+    preco: 9.9,
+    quantidade: 0,
+    imagem: "imagens/camiseta.png"
+  },
+  {
+    id: 4,
+    nome: 'Sapato',
+    preco: 199.9,
+    quantidade: 0,
+    imagem: "imagens/camiseta.png"
+  },
+  {
+    id: 5,
+    nome: 'Boné',
+    preco: 29.9,
+    quantidade: 0,
+    imagem: "imagens/camiseta.png"
+  },
+  {
+    id: 6,
+    nome: 'Óculos',
+    preco: 99.9,
+    quantidade: 0,
+    imagem: "imagens/camiseta.png"
+  },
+  {
+    id: 7,
+    nome: 'Relógio',
+    preco: 299.9,
+    quantidade: 0,
+    imagem: "imagens/camiseta.png"
+  },
+  {
+    id: 8,
+    nome: 'Bermuda',
+    preco: 79.9,
+    quantidade: 0,
+    imagem: "imagens/camiseta.png"
+  },
+  {
+    id: 9,
+    nome: 'Cueca',
+    preco: 19.9,
+    quantidade: 0,
+    imagem: "imagens/camiseta.png"
+  },
+  {
+    id: 10,
+    nome: 'Meia',
+    preco: 9.9,
+    quantidade: 0,
+    imagem: "imagens/camiseta.png"
+  },
 ])
 
+const carrinho = [
+  {
+    id: 1,
+    nome: 'Camiseta',
+    preco: 49.9,
+    quantidadeCarrinho: 1,
+    valorTotal: 49.9
+  },
+  {
+    id: 2,
+    nome: 'Calça',
+    preco: 99.9,
+    quantidadeCarrinho: 2,
+    valorTotal: 199.8
+  },
+  {
+    id: 3,
+    nome: 'Meia',
+    preco: 9.9,
+    quantidadeCarrinho: 4,
+    valorTotal: 39.6
+  }
+]
+const enviar = ref(false)
 
-function remover(index) {
-    carrinho.value.splice(index, 1);
+function total() {
+  for (let i = 0; i < carrinho.length; i++) {
+    const valorTotal = valorTotal[i] + valorTotal
+  }
 }
 
-function decrementar(id) {
-    if (produtos.value[id].quantidade > 0) {
-        produtos.value[id].quantidade--;
-    }
+function diminuir(idProd) {
+  if (produtos.value[idProd].quantidade > 0) {
+    produtos.value[idProd].quantidade--;
+  }
 }
 
-function adicionar(index) {
-    if(produtos.value[index].quantidade > 0){
-
-        novoItem.value.id = produtos.value[index].id;
-        novoItem.value.nome = produtos.value[index].nome;
-        novoItem.value.preco = produtos.value[index].preco;
-        novoItem.value.quantidade = produtos.value[index].quantidade;
-        carrinho.value.push({ ...novoItem.value });
-    }else{
-        alert("Selecione a quantidade do produto desejado")
-    }
+function adicionarCarrinho(index) {
+  if (produtos.value[index].quantidade > 0) {
+    novoItem.value.id = produtos.value[index].id;
+    novoItem.value.nome = produtos.value[index].nome;
+    novoItem.value.preco = produtos.value[index].preco;
+    novoItem.value.quantidade = produtos.value[index].quantidade;
+    carrinho.value.push({ ...novoItem.value });
+  }
+  else {
+    alert("Selecione a quantidade do produto desejado")
+  }
 
 }
 
-
+function removerCarrinho(index) {
+  carrinho.value.splice(index, 1)
+}
 </script>
-
 <template>
-    <div class="geral">
 
-        <div class="produtos">
-            <h1>Produtos</h1>
-            <div class="gridProdutos">
-                <div class="itens" v-for="(produto, index) in produtos" :key="index">
-                    <p>Nome: {{ produto.nome }}</p>
-                    <p>Preço: R$ {{ produto.preco }}</p>
-                    <p>Quantidade: {{ produto.quantidade }}</p>
-                    <button @click="produto.quantidade++">+</button>
-                    <button @click="decrementar(produto.id - 1)">-</button>
-                    <button @click="adicionar(index)">Adicionar</button>
-                </div>
-            </div>
+
+
+
+  <ul class="produtos-main">
+    <h2>Loja Dev Web</h2>
+
+    <li class="produtos-item" v-for="(produto, index) in produtos" :key="index">
+      <div>
+        <p>Imagem: {{ produto.imagem }}</p>
+      </div>
+      <div>
+        <p>Nome: {{ produto.nome }}</p>
+      </div>
+      <div>
+        <p>Preço: R$:{{ produto.preco }}</p>
+      </div>
+      <div>
+        <p>Valor Total: R$:{{ produto.valorTotal }}</p>
+      </div>
+      <p v-for="(produto, key) in produtos" :key="key">{{ produto.key }}</p>
+      <div class="bt">
+        <button class="btProd" @click="produto.quantidade++">+</button>
+        <p>{{ produto.quantidade }}</p>
+        <button class="btProd" @click="diminuir">-</button>
+      </div>
+      <div>
+        <button class="btCarrinho" @click="adicionarCarrinho(index)">Adicionar ao carrinho</button>
+      </div>
+    </li>
+  </ul>
+  <button class="btprod" @click="enviar=true"> Carrinho</button>
+<div v-if="enviar">
+  <div class="container">
+        <h2>Carrinho</h2>
+        <div class="item" v-for="(item, index) in carrinho" :key="index">
+            <p>Nome: {{ item.nome }}</p>
+            <p>Preço: R$:{{ item.preco }}</p>
+            <p>Quantidade: {{ item.quantidade }}</p>
         </div>
-
-
-        <div class="carrinho">
-            <h2>Carrinho</h2>
-            <div class="itens" v-for="(produto, index) in carrinho" :key="index">
-                <p>Nome: {{ produto.nome }}</p>
-                <p>Preço: R$ {{ produto.preco }}</p>
-                <p>Quantidade: {{ produto.quantidade }}</p>
-                <button @click="remover(index)">Remover</button>
-
-            </div>
-        </div>
+        <button @click="total" class="botao">Somar produtos</button>
+        <p>{{ valorTotal }}</p>
+            <button type="submit" class="botao">finalizar compra</button>
     </div>
+</div>
 </template>
-
 <style scoped>
-.produtos, .carrinho {
-    text-align: center;
-    margin: 20px;
-    margin-top: 20px;
-    width: auto;
-    height: min-content;
-
-    border-radius: 6px;
-    color: #F2F2F2;
+.botao {
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 7px 20px;
+  background-color: #be92e7;
+  color: aliceblue;
+  margin: 5px;
+  width: 220px;
 }
 
-.gridProdutos {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-
+.container {
+  font-size: 18px;
+  background-color: #b376aa;
+  padding: 80px;
+  border-radius: 15px;
+  box-shadow: 0px 10px 40px #00000056;
+  width: 400px;
+  color: black;
 }
 
-.itens {
-    
-    width: 200px;
-    padding: 10px;
-    background-color: #262626;
-    box-shadow: #262626 2px 2px 10px;
-    margin: 20px auto;
-    font-size: 16px;
-    border-radius: 6px;
+li {
+  list-style: none;
+  justify-content: space-around;
+  display: flex;
 }
 
 
-.geral {
-    display: grid;
-    grid-template-columns: 70% 30%;
+
+.bt {
+  background-color: #ccc;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 0;
+  justify-content: space-around;
+  min-width: 60px;
+  border-radius: 20px;
 }
 
-button {
-    margin: 5px;
-    font-size: 17px;
-    background-color: #0D0D0D;
-    color: #9FA2A6;
-    border-radius: 6px;
-    border: none;
-    padding: 10px 20px;
+.btProd {
+  background: transparent;
+  border: 0;
+  align-items: center;
+  padding: 0 10px;
 }
 
-button:hover {
-    transform: scale(1.02);
-    transition: 0.2s;
+.btCarrinho {
+  margin: 10px;
+  background-color: #9484cf;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 0;
+ 
+  min-width: 60px;
+  border-radius: 20px;
 }
 
-h1,
 h2 {
-    font-size: 35px;
-    padding: 10px;
-    margin-top: 0;
-    color: #0D0D0D;
-    border-bottom: #0D0D0D solid 2px;
+  padding: 50px 0;
+  text-align: center;
+  font-size: 40px;
 }
-</style>
+
+.produtos-main .produtos-item {
+  background-color: white;
+  position: relative;
+  width: 100%;
+  margin: 30px 0;
+  border-radius: 8px;
+  box-shadow: 0 4px 18px #2a2f430f;
+  justify-content: space-around;
+}</style>
